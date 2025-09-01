@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Dependencies:
+#  upower
+#
+
+
+upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -E "time to|percentage" | sed "s/\s//g;s/\.[0-9]//g;s/seconds/s/;s/minutes/m/;s/hours/h/;s/days/d/;s/years/y/;s/timetofull:/+/;s/timetoempty:/-/;s/percentage://" | tr '\n' ' '
+
+case $BUTTON in
+	6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
+esac

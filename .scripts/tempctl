@@ -1,0 +1,32 @@
+#!/bin/sh
+
+# Dependencies
+# redshift
+#
+
+file="$HOME/.rstemp"
+delta=500
+min=1000
+max=6500
+current=$(cat $file)
+ceil=$(test $current -ge $max; echo $?)
+floor=$(test $current -le $min; echo $?) 
+
+change_temp(){
+	temp=$(($current+$delta))
+	echo $temp > $file
+	redshift -PO $temp -m randr
+}
+
+case $1 in
+	# increment
+	"-i") delta=$(($delta*$ceil)) && change_temp ;;
+	# decrement
+	"-d") delta=$(($delta*$floor*(-1))) && change_temp ;;
+	# reset
+	"-r") redshift -Px -m randr && echo $max > $file ;;
+	# set to min
+	"-m") redshift -PO $min -m randr && echo $min > $file ;;
+	# load from file
+	"-l") temp=$(cat $file) && redshift -PO $temp -m randr ;;
+esac

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Dependencies:
+#  pamixer
+#
+
+case $1 in
+	"-i") pamixer -i $2 ;;
+	"-d") pamixer -d $2 ;;
+	"-m") pamixer -t ;;
+	"--max") pamixer --set-volume 100 ;;
+	"--min") pamixer --set-volume 0 ;;
+esac
+
+pkill -RTMIN+10 dwmblocks

@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# Dependencies
+#  imagemagick
+#  libnotify
+
+path=$2
+file="$(date '+%Y%m%d%H%M%S').png" 
+filepath="$path/$file"
+
+name_file(){
+	name=$(echo "" | dmenu -i -p "prefix:")
+	if [ -n "$name" ]; then
+		mv $filepath "$path/$name-$file"
+	fi
+}
+
+case $1 in 
+	"-s")	import $filepath && notify-send -i $filepath "Captured selection." && name_file ;;
+	"-f")	import -window root $filepath && notify-send -i $filepath "Captured screen." && name_file ;;
+esac

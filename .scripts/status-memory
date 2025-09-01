@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Dependencies
+#
+#
+
+raw=$(free | grep "Mem:" | sed 's/\s\s*/ /g')
+total=$(echo $raw | cut -d' ' -f2)
+used=$(echo $raw | cut -d' ' -f3)
+
+echo "$(echo "(100*$used)/$total" | bc)%"
+
+case $BUTTON in
+	6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
+esac

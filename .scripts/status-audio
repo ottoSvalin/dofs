@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# Dependencies
+#  pamixer
+#  audioctl (script)
+
+
+volume=$(pamixer --get-volume)
+muted=$(pamixer --get-mute)
+case $muted in
+	"true") echo "$volume-" ;;
+	"false") echo "$volume%" ;;
+esac
+
+case $BUTTON in
+	1) audioctl -m ;;
+	6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
+esac

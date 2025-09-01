@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Dependencies
+#
+
+cd "$HOME/www" && hugo new content "notes/$1.md" && test -f "content/notes/$1.md" && $EDITOR "content/notes/$1.md" || (test -f "content/notes/$1.md" && $EDITOR "content/notes/$1.md")

@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# Dependencies
+#  xinput
+#
+
+get_xinput_device_id(){
+	#$1 - name of device
+	xinput list | grep "$1\s\s*id="  | sed 's/.*id=//;s/\s\s*/ /g' | cut -d' ' -f1
+}
+
+get_xinput_prop_id(){
+	#$1 - id of device
+	#$2 - name of prop
+	xinput list-props $1 | grep "$2 (" | sed 's/.*(//;s/).*//'
+}
+
+set_xinput_device_prop(){
+	#$1 - name of device
+	#$2 - name of prop
+	#$3 - value
+	local deviceid=$(get_xinput_device_id "$1")
+	xinput set-prop $deviceid $(get_xinput_prop_id $deviceid "$2") $3
+}
+
+case $# in
+	3) set_xinput_device_prop "$1" "$2" $3 ;;
+	*) echo "usage: setdevprop [device name] [prop name] [value]" ;;
+esac

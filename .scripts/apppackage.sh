@@ -1,0 +1,1 @@
+apt install bc brightnessctl dunst dwm extrepo gimp git hugo imagemagick libnotify-bin make net-tools pamixer patch pavucontrol redshift stterm suckless-tools sudo sxiv texlive-base tree unzip upower vim-gtk3 vim xclip xdiskusage xdotool xinit xinput xorg-dev xorg xournalpp zathura zip

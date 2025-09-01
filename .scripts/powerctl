@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# Dependencies
+#  slock
+#  dmenu
+
+lock_screen(){
+	systemctl suspend && slock
+}
+
+action_menu(){
+
+	action=$(printf "Lock\nExit\nShutdown\nReboot" | dmenu)
+
+	case $action in
+		"Lock") lock_screen ;;
+		"Exit") killall dwm ;;
+		"Shutdown") sudo shutdown now ;;
+		"Reboot") sudo reboot ;;
+	esac
+}
+
+case $1 in
+	"-l") lock_screen ;;
+	"-m") action_menu ;;
+esac

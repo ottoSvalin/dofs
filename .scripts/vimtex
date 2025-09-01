@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Dependencies
+#  vim
+#  xdg-open
+#  pdflatex
+
+name=$(echo $1 | sed "s/\..*$//")
+
+open_texfile(){
+	pdflatex "$name.tex" && open "$name.pdf" & $EDITOR "$name.tex"
+}
+test -f "$name.tex" && open_texfile || cp "$HOME/.scripts/template.tex" "$name.tex" && open_texfile

@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# Dependencies
+#  network-manager
+#
+
+
+#state="$(iwctl station wlan0 show | grep -E "State" | sed "s/\s\s*/%/g;s/%State%//;s/%//")"
+connectivity=$(ping -c 1 8.8.8.8 > /dev/null 2>&1; echo $?)
+connection=$(nmcli --color no device | sed 's/\s\s\s*/%/g' | grep "wifi%connected" | cut -d'%' -f4)
+
+case $connectivity in
+	0) echo "[=] $connection" ;;
+	1) echo "[?] $connection" ;;
+	2) echo "[ ] $connection" ;;
+esac
+
+case $BUTTON in
+	1) netwctl ;;
+	6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
+esac

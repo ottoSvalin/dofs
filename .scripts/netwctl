@@ -1,0 +1,67 @@
+#!/bin/sh
+
+# Dependencies
+#  dwmblocks
+#  libnotify
+#  network-manager
+#
+
+notify-send -u low "Scanning..."
+
+device_name=$(nmcli -f DEVICE,TYPE --color no device | grep "\swifi\s" | cut -d' ' -f1)
+
+current_ssid=$(nmcli --color no -f DEVICE,CONNECTION device status | grep "^$device_name\s" | sed 's/\s\s\s*/%/g' | cut -d'%' -f2)
+
+target_ssid=$(nmcli --color no device wifi list | tail -n +2 | grep -v "\-\-" | dmenu -i -l 32 | sed 's/\s\s\s*/%/g' | cut -d'%' -f3)
+
+update_statusbar(){
+	pkill -RTMIN+12 dwmblocks
+}
+
+on_success(){
+	notify-send -u low "Successfully connected to $target_ssid." && update_statusbar
+}
+
+connect_to_wifi(){
+
+	is_known=$(nmcli --colors no -f NAME,TYPE,TIMESTAMP-REAL connection show | sed 's/\s\s\s*/%/g' | grep "%wifi%" | grep -v "%never%$" | cut -d'%' -f1 | sort | uniq | grep -wc "$target_ssid")
+	
+	case $is_known in
+		0) setsid -f "$TERMINAL" -e nmcli device wifi connect $target_ssid --ask ;;
+		1) nmcli device wifi connect $target_ssid && on_success;;
+	esac
+}
+
+forget_wifi(){
+	nmcli connection delete $target_ssid && notify-send -u low "Forgor $target_ssid..."
+}
+
+disconnect_from_wifi(){
+	nmcli device disconnect $device_name && notify-send -u low "Disconnected from $current_ssid." && update_statusbar
+}
+
+show_password(){
+	setsid -f "$TERMINAL" -e watch -ctn 5 nmcli --color yes device wifi show-password
+}
+
+do_action(){
+	if [ "$current_ssid" = "$target_ssid" ]; then
+		choices="disconnect\npassword\n"
+	else
+		choices="connect\n"
+	fi
+
+	if [ "$(nmcli --color no -f NAME connection | grep -wc $target_ssid)" = "1" ]; then
+		choices=$choices"forget"
+	fi
+
+	action=$(printf $choices | dmenu -i)
+	case $action in
+		"connect") connect_to_wifi ;;
+		"disconnect") disconnect_from_wifi ;;
+		"password") show_password ;;
+		"forget") forget_wifi && disconnect_from_wifi ;;
+	esac
+}
+
+do_action

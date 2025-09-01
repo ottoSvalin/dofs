@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# Dependencies
+#
+#
+
+touchscreen_state=$(xinput list-props 13 | grep -E "Device Enabled" | sed "s/\s\s*/ /g" | cut -d' ' -f5)
+
+case $touchscreen_state in
+	0) echo "[ ] " ;;
+	1) echo "[O] " ;;
+esac
+
+case $BUTTON in 
+	1) tabletctl -t ;;
+	6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
+esac

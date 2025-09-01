@@ -1,0 +1,43 @@
+#!/bin/sh
+
+# Dependencies
+#  libnotify
+#  xinput
+#  rotctl (script)
+
+
+#rotation=$(xrandr --current --verbose | grep primary | cut -d' ' -f6)
+
+toggle_touchscreen(){
+	next_state=$((0==$(xinput list-props 13 | grep -E "Device Enabled" | sed "s/\s\s*/ /g" | cut -d' ' -f5)))
+	case $next_state in
+		"0") message="diabled" ;;
+		"1") message="enabled" ;;
+	esac
+	setdevprop "Elan Touchscreen" "Device Enabled" $next_state && 
+		notify-send -u low  "Touchscreen $message."
+}
+
+set_stylus(){
+	setdevprop "0117 eraser" "Device Enabled" $1 &&
+		setdevprop "0117 Stylus eraser" "Device Enabled" $1 &&
+		setdevprop "0117 stylus" "Device Enabled" $1 &&
+		setdevprop "0117 Stylus stylus" "Device Enabled" $1
+}
+
+update_status(){
+	pkill -RTMIN+11 dwmblocks
+}
+
+case $1 in
+	"-l") setdevprop "Elan Touchscreen" "Device Enabled" 1 &&
+		set_stylus 1 && update_status && rotctl inverted ;; # landscape
+
+	"-s") setdevprop "Elan Touchscreen" "Device Enabled" 1 &&
+
+		set_stylus 1 && update_status && rotctl left ;; # standing
+	"-t") toggle_touchscreen && update_status ;; 
+
+	"-x") setdevprop "Elan Touchscreen" "Device Enabled" 0 &&
+		set_stylus 0 && update_status && rotctl normal ;;
+esac

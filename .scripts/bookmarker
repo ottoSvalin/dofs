@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# Dependencies:
+#  libnotify
+#  xdotool
+#  xclip
+
+file="$HOME/.bookmarks"
+touch $file
+
+save_bookmark(){
+	bookmark="$(xclip -o)"
+	if ! grep -q "^$bookmark$" "$file"; then
+		echo "$bookmark" >> "$file"
+		notify-send -u low "New bookmark added!"
+	else
+		notify-send -u low "Bookmark already exist!"
+	fi
+}
+
+case $1 in 
+	"-p") setxkbmap us && xdotool type "$(grep -v '^#' $file | sort | dmenu -i -l 32)" && setxkbmap se ;;
+	"-c") save_bookmark ;;
+esac
