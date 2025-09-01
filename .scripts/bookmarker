@@ -19,6 +19,6 @@ save_bookmark(){
 }
 
 case $1 in 
-	"-p") setxkbmap us && xdotool type "$(grep -v '^#' $file | sort | dmenu -i -l 32)" && setxkbmap se ;;
+	"-p") setxkbmap us && xdotool type "$(grep -v '^$' $file | sort | dmenu -i -l 32)" && setxkbmap se ;;
 	"-c") save_bookmark ;;
 esac

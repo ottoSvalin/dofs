@@ -1,0 +1,32 @@
+#!/bin/sh
+
+# Dependencies
+#
+#
+
+print_help(){
+	echo "usage: ' package-logger [OPTION] '"
+	echo "options:"
+	echo " --install-all-packages"
+	echo " -s --save"
+	echo " -l --list"
+}
+
+install_packages(){
+	local packages=$(echo $(cat "$HOME/.system_packages"))
+	sudo apt install $packages
+}
+
+if [ $# != 1 ]; then
+	print_help
+	exit 1
+fi
+
+case $1 in
+	"--install-all-packages") install_packages ;;
+	"--save") apt-mark showmanual > "$HOME/.system_packages" ;;
+	"-s") apt-mark showmanual > "$HOME/.system_packages" ;;
+	"--list") less "$HOME/.system_packages" ;;
+	"-l") less "$HOME/.system_packages" ;;
+	*) print_help ;;
+esac
