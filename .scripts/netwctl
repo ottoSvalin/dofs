@@ -12,7 +12,7 @@ device_name=$(nmcli -f DEVICE,TYPE --color no device | grep "\swifi\s" | cut -d'
 
 current_ssid=$(nmcli --color no -f DEVICE,CONNECTION device status | grep "^$device_name\s" | sed 's/\s\s\s*/%/g' | cut -d'%' -f2)
 
-target_ssid=$(nmcli --color no device wifi list | tail -n +2 | grep -v "\-\-" | dmenu -i -l 32 | sed 's/\s\s\s*/%/g' | cut -d'%' -f3)
+target_ssid=$(nmcli --color no device wifi list | tail -n +2 | grep -v "\-\-" | sed 's/^*\s\s\s/--->/' | dmenu -i -l 32 | sed 's/\s\s\s*/%/g' | cut -d'%' -f3)
 
 update_statusbar(){
 	pkill -RTMIN+12 dwmblocks
@@ -45,6 +45,9 @@ show_password(){
 }
 
 do_action(){
+	if [ "$target_ssid" = "" ]; then
+		exit 0;
+	fi
 	if [ "$current_ssid" = "$target_ssid" ]; then
 		choices="disconnect\npassword\n"
 	else
@@ -54,8 +57,7 @@ do_action(){
 	if [ "$(nmcli --color no -f NAME connection | grep -wc $target_ssid)" = "1" ]; then
 		choices=$choices"forget"
 	fi
-
-	action=$(printf $choices | dmenu -i)
+	action=$(printf $choices | dmenu -i -c -l 3 -p "$target_ssid")
 	case $action in
 		"connect") connect_to_wifi ;;
 		"disconnect") disconnect_from_wifi ;;
