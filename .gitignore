@@ -1,3 +1,6 @@
+*/*.swp
+**/*.swp
 .config/*
 !.config/dunst
 !.config/dunst/*
+!.config/user-dirs.*

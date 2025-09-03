@@ -10,11 +10,12 @@ lock_screen(){
 
 action_menu(){
 
-	action=$(printf "lock\nexit\nshutdown\nreboot" | dmenu -i -p "powerctl")
+	action=$(printf "lock\nrestart\nexit\nshutdown\nreboot" | dmenu -i -c -l 5)
 
 	case $action in
 		"lock") lock_screen ;;
-		"exit") killall dwm ;;
+		"restart") restartdwm ;;
+		"exit") kill -TERM $(pidof dwm) && xdotool key Super_L ;;
 		"shutdown") sudo shutdown now ;;
 		"reboot") sudo reboot ;;
 	esac

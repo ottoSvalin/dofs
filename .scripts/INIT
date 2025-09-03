@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Dependencies
+#
+#
+
+mkdir -p $HOME/desktop $HOME/documents $HOME/music $HOME/pictures/screenshots $HOME/saved $HOME/videos $HOME/templates $HOME/public && xdg-user-dirs-update

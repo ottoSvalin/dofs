@@ -1,0 +1,60 @@
+#!/bin/sh
+
+XRESOURCES_PATH="$HOME/.Xresources"
+
+get_theme(){
+	current_theme=$(grep -w "^!DO_NOT_MODIFY_THIS_LINE.*$" "$XRESOURCES_PATH" | cut -d' ' -f2)
+	case $current_theme in
+		"DARK") theme=3 ;;
+		"LIGHT") theme=2 ;;
+	esac
+}
+
+case $1 in
+	"--dark") theme=2 ;;
+	"--light") theme=3 ;;
+	"-t") get_theme ;;
+	*) exit 1 ;;
+esac
+
+set_theme(){
+	new_line=$(echo $1 | cut -d' ' -f1,$theme)
+	pattern=$(echo $new_line | cut -d' ' -f1) 
+	sed 's,^'"$pattern"'.*$,'"$new_line"',' $XRESOURCES_PATH > "$XRESOURCES_PATH.tmp"
+	cp "$XRESOURCES_PATH.tmp" $XRESOURCES_PATH
+}
+
+#set_theme "<setting> <dark> <light>"
+set_theme "st.color0: #1d2021 #fbf1c7"
+set_theme "st.color1: #cc241d #cc241d"
+set_theme "st.color2: #98971a #98971a"
+set_theme "st.color3: #d79921 #d79921"
+set_theme "st.color4: #458588 #458588"
+set_theme "st.color5: #b16286 #b16286"
+set_theme "st.color6: #689d6a #689d6a"
+set_theme "st.color7: #a89984 #7c6f64"
+set_theme "st.color8: #928374 #928374"
+set_theme "st.color9: #fb4934 #9d0006"
+set_theme "st.color10: #b8bb26 #79740e"
+set_theme "st.color11: #fabd2f #b57614"
+set_theme "st.color12: #83a598 #076678"
+set_theme "st.color13: #d3869b #8f3f71"
+set_theme "st.color14: #8ec07c #427b58"
+set_theme "st.color15: #ebdbb2 #3c3836"
+set_theme "st.background: #282828 #fbf1c7"
+set_theme "st.foreground: white #282828"
+set_theme "st.cursorColor: white #282828"
+
+set_theme "*.normbgcolor: #282828 #ebdbb2"
+set_theme "*.normfgcolor: #ebdbb2 #282828"
+set_theme "*.selbgcolor: #458588 #458588"
+set_theme "*.selfgcolor: #1d2021 #ebdbb2"
+
+set_theme "dwm.selbordercolor: #458588 #458588"
+set_theme "dwm.normbordercolor: #32302f #f2e5bc"
+
+set_theme "!DO_NOT_MODIFY_THIS_LINE DARK LIGHT"
+
+rm "$XRESOURCES_PATH.tmp" &&
+	xrdb $XRESOURCES_PATH &&
+	restartdwm

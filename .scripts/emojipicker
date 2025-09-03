@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Dependencies
+#
+#
+
+setxkbmap us && xdotool type "$(cat "$HOME/.emoji_lookup" | dmenu -i -l 5 | sed 's/\s.*//')" && setxkbmap se

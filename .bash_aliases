@@ -1,6 +1,6 @@
 alias ls='ls --color=auto'
 alias la='ls -A'
 alias ll='ls -x'
-alias o='ls | grep ".pdf\|.jpg\|.png\|.jpeg" | dmenu -l 32 | xargs zathura'
+alias o='ranger'
 alias hss='hugo server --noHTTPCache'
 alias td='vim ~/.TODO'

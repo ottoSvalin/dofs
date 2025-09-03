@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Dependencies
+#
+#
+
+
+kill -HUP $(pidof -s dwm) && xdotool key Super_L

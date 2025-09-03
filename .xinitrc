@@ -29,5 +29,8 @@ exec dunst &
 # Tray
 exec dwmblocks &
 
+exec discord &
+
 # Window manager
-exec dwm
+
+ssh-agent dwm
