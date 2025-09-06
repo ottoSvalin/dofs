@@ -23,6 +23,12 @@ tempctl -l
 pamixer --set-volume 25
 pamixer -m
 
+# set theme
+xrdb "$HOME/.Xresources"
+
+# set wallpaper
+~/.fehbg &
+
 # Notification server
 exec dunst &
 
@@ -33,4 +39,4 @@ exec discord &
 
 # Window manager
 
-ssh-agent dwm
+exec dwm

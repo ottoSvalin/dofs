@@ -4,3 +4,6 @@
 !.config/dunst
 !.config/dunst/*
 !.config/user-dirs.*
+!.config/fontconfig
+!.config/fontconfig/conf.d
+!.config/fontconfig/conf.d/01-emoji.conf
