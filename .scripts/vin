@@ -3,4 +3,4 @@
 # Dependencies
 #
 
-cd "$HOME/www" && hugo new content "notes/$1.md" && test -f "content/notes/$1.md" && $EDITOR "content/notes/$1.md" || (test -f "content/notes/$1.md" && $EDITOR "content/notes/$1.md")
+cd "$HOME/www" && hugo new content "$1.md" && test -f "content/$1.md" && $EDITOR "content/$1.md" || (test -f "content/$1.md" && $EDITOR "content/$1.md")
