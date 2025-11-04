@@ -6,9 +6,9 @@
 #
 
 vecka=$(curl -s "https://vecka.nu/" | grep "time datetime" | sed 's/<.*">//;s/<.*//;s/\s//g')
-lasvecka=$(curl -s "https://lasvecka.nu/" | sed 's/.*<title>LV //;s/\s.*//')
+lasvecka=$(curl -s https://lasvecka.nu | sed 's/.*<title>//;s/ |.*//;s/\s\s*//')
 
-echo "LV$lasvecka v$vecka"
+echo "$lasvecka v$vecka"
 
 case $BUTTON in
 	# On left click
