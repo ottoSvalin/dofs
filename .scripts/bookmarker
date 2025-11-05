@@ -11,14 +11,20 @@ touch $file
 save_bookmark(){
 	bookmark="$(xclip -o)"
 	if ! grep -q "^$bookmark$" "$file"; then
-		echo "$bookmark" >> "$file"
+    tag=$(echo "" | dmenu -p "tag:" | sed 's/ /_/g')
+		echo "[$tag] $bookmark" >> "$file"
 		notify-send -u low "New bookmark added!"
 	else
 		notify-send -u low "Bookmark already exist!"
 	fi
 }
 
+paste_bookmark(){
+  bookmark=$(grep -v '^$' $file | dmenu -i -l 32 | sed 's/\S* //')
+  setxkbmap us && xdotool type "$bookmark" && setxkbmap se
+}
+
 case $1 in 
-	"-p") setxkbmap us && xdotool type "$(grep -v '^$' $file | sort | dmenu -i -l 32)" && setxkbmap se ;;
+	"-p") paste_bookmark ;;
 	"-c") save_bookmark ;;
 esac

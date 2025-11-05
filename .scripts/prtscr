@@ -9,7 +9,7 @@ file="$(date '+%Y%m%d%H%M%S').png"
 filepath="$path/$file"
 
 name_file(){
-	name=$(echo "" | dmenu -i -p "prefix:")
+	name=$(echo "" | dmenu -i -p "prefix:" | sed 's/ /_/g')
 	if [ -n "$name" ]; then
 		mv $filepath "$path/$name-$file"
 	fi
