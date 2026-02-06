@@ -22,8 +22,8 @@
 
 *.normbgcolor: #1d2021
 *.normfgcolor: #ebdbb2
-*.selbgcolor: #83a598
+*.selbgcolor: #8ec07c
 *.selfgcolor: #1d2021
 
-*.selbordercolor: #83a598
+*.selbordercolor: #8ec07c
 *.normbordercolor: #32302f

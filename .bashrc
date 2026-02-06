@@ -119,4 +119,6 @@ export EDITOR="vim"
 export SUDO_EDITOR="vim"
 export PATH=~/.scripts:$PATH
 
+#ntracker --print
 cat ~/.TODO
+. "$HOME/.cargo/env"
