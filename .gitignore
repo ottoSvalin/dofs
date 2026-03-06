@@ -3,6 +3,8 @@
 .config/*
 !.config/dunst
 !.config/dunst/*
+!.config/nvim
+!.config/nvim/*
 !.config/user-dirs.*
 !.config/fontconfig
 !.config/fontconfig/conf.d

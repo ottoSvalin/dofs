@@ -47,15 +47,29 @@ set_theme "*.background: #1d2021 #f9f5d7"
 set_theme "*.foreground: #ebdbb2 #282828"
 set_theme "*.cursorColor: #ebdbb2 #282828"
 
-ACCENT_COLOR="#83a598 #458588"
+ACCENT_COLOR_DARK="#8ec07c"
+ACCENT_COLOR_LIGHT="#427b58"
 
-set_theme "*.normbgcolor: #1d2021 #f9f5d7"
-set_theme "*.normfgcolor: #ebdbb2 #282828"
-set_theme "*.selbgcolor: $ACCENT_COLOR"
-set_theme "*.selfgcolor: #1d2021 #f9f5d7"
+# ========= old light theme
+#set_theme "*.normbgcolor: #1d2021 #f9f5d7"
+#set_theme "*.normfgcolor: #ebdbb2 #282828"
+#set_theme "*.selbgcolor: $ACCENT_COLOR_DARK $ACCENT_COLOR_LIGHT"
+#set_theme "*.selfgcolor: #1d2021 #f9f5d7"
+#
+#set_theme "*.selbordercolor: $ACCENT_COLOR_DARK $ACCENT_COLOR_LIGHT"
+#set_theme "*.normbordercolor: #32302f #f2e5bc"
+# =========
 
-set_theme "*.selbordercolor: $ACCENT_COLOR"
-set_theme "*.normbordercolor: #32302f #f2e5bc"
+set_theme "*.normbgcolor: #1d2021 $ACCENT_COLOR_LIGHT"
+set_theme "*.normfgcolor: #ebdbb2 #f9f5d7"
+set_theme "*.selbgcolor: $ACCENT_COLOR_DARK #f9f5d7"
+set_theme "*.selfgcolor: #1d2021 #282828"
+
+set_theme "*.selbordercolor: $ACCENT_COLOR_DARK #f2e5bc"
+set_theme "*.normbordercolor: #32302f $ACCENT_COLOR_LIGHT"
+
+
+
 
 set_theme "!DO_NOT_MODIFY_THIS_LINE DARK LIGHT"
 

@@ -1,0 +1,42 @@
+#!/bin/sh
+
+# Dependencies
+# acpi
+# notify-send
+
+percentage=$(acpi -b | grep -Po '[0-9]+(?=%)')
+is_charging=$(acpi -b | grep -c "Charging")
+count_down=$(acpi -b | grep -Po '[0-9]+:[0-9]+')
+hours=$(echo "$count_down" | sed 's/:.*//;s/^0//')
+minutes=$(echo "$count_down" | sed 's/.*://;s/^0//')
+
+status="$percentage""%"
+
+if [ ! $hours -eq 0 ]; then
+  status="$hours""h $status"
+elif [ ! $minutes -eq 0 ]; then
+  status="$minutes""m $status"
+fi
+
+if [ $is_charging -eq 1 ]; then
+  status="+$status"
+else
+  status="-$status"
+fi
+
+echo "$status"
+
+case $BUTTON in
+	# On left click
+  1) notify-send -u low "Battery health: $(acpi -i | grep -Po '(?<= = )[0-9]+%')" ;;
+	# On middle click
+	2) ;;
+	# On right click
+	3) ;;
+	# On scroll up
+	4) ;;
+	# On scroll down
+	5) ;;
+	# On Shift+left click, open this file
+	6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
+esac

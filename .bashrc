@@ -115,9 +115,10 @@ fi
 PS1='\[\e[93;1m\]\u\[\e[92m\]@\h\[\e[0;95;3m\]:\w\[\e[0m\]\\$ '
 
 export TERMINAL="st"
-export EDITOR="vim"
-export SUDO_EDITOR="vim"
+export EDITOR="nvim"
+export SUDO_EDITOR="nvim"
 export PATH=~/.scripts:$PATH
+export PATH=$PATH:~/.local/bin
 
 #ntracker --print
 cat ~/.TODO
